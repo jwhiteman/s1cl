@@ -1,4 +1,4 @@
-// https://nachtimwald.com/2017/11/18/base64-encode-and-decode-in-c/
+/* https://nachtimwald.com/2017/11/18/base64-encode-and-decode-in-c/ */
 
 #include <stdlib.h>
 #include <string.h>
