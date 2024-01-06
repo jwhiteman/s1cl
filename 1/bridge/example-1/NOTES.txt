@@ -1,0 +1,6 @@
+from https://docs.scheme.org/guide/ffi-c/
+
+$ csi
+#;1> (import (mytime))
+#;2> (mytime)
+1589710285

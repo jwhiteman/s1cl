@@ -1,0 +1,7 @@
+(load "output") ;; could probably just call this a .so:
+
+csc -shared mycode.scm -o mylib.so
+
+then:
+
+(load "mylib.so")
