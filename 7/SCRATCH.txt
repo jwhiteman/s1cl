@@ -1,0 +1,28 @@
+// write and check
+FILE *outfile = fopen("output.bin", "wb");
+size_t bytes_written = fwrite(bytes, sizeof(char), buflen, outfile);
+printf("buflen: %zu  bytes_written: %zu\n", buflen, bytes_written);
+fclose(outfile);
+
+"YELLOW SUBMARINE".unpack("H*")
+=> 59454c4c4f57205355424d4152494e45
+
+openssl enc -aes-128-ecb -d -base64 -in 7.txt -K 59454c4c4f57205355424d4152494e45
+
+require "base64"
+require "openssl"
+ciphertext = Base64.decode64(IO.read("7.txt"))
+key        = "YELLOW SUBMARINE"
+cipher     = OpenSSL::Cipher.new("AES-128-ECB")
+cipher.key = key
+plaintext  = cipher.update(ciphertext) + cipher.final
+
+
+require "base64"
+ciphertext = Base64.decode64(IO.read("7.txt"))
+File.open("ok.bin", "wb") { |f| f << ciphertext }
+
+openssl enc -aes-128-ecb -d -in ok.bin -K 59454c4c4f57205355424d4152494e45
+
+
+openssl enc -aes-128-ecb -d -in output.bin -K 59454c4c4f57205355424d4152494e45

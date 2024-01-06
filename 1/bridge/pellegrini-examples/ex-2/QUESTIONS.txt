@@ -1,0 +1,2 @@
+- how to get chicken-eval-string to work?
+- can I use csc to generate c instead of a binary?

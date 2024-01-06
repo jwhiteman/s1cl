@@ -1,0 +1,13 @@
+https://github.com/accidentalrebel/chicken-scheme-ffi-example
+https://www.accidentalrebel.com/chicken-scheme-ffi-examples.html
+https://wiki.call-cc.org/eggref/5/lazy-ffi
+https://docs.scheme.org/guide/ffi-c/
+https://www.more-magic.net/posts/scheme-c-integration.html
+https://demonastery.org/2011/01/chicken-scheme-and-ffi/
+
+https://goober99.hashnode.dev/learn-scheme-by-example-tk-gui-with-chicken-scheme
+https://dev.to/goober99/learn-scheme-by-example-iup-gui-with-chicken-scheme-4292
+
+
+https://danrh.net/posts/2023-02-01-calling-a-c-library-from-chicken/
+https://pestilenz.org/~ckeen/blog/posts/callbacks.html
