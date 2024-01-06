@@ -1,0 +1,7 @@
+This may have been the reason it wasn't working?
+
+```
+	csc x.scm y.c -embedded
+```
+
+replace it and see what happens.
