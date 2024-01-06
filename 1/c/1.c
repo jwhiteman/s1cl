@@ -5,8 +5,6 @@
 #include "../../lib/decodehex.h"
 #include "../../lib/base64.h"
 
-// TODO: try to call chicken from c
-
 int
 main()
 {
@@ -17,7 +15,11 @@ main()
   char *enc_text  = b64_encode((const unsigned char *)text, strlen(text));
 
   printf("\n****** TEST OUTPUT ******: %s\n\n", text);
+  // => I'm killing your brain like a poisonous mushroom
+
+
   printf("\n****** TEST OUTPUT ******: %s\n\n", enc_text);
+  // => SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t
 
   free(text);
   free(enc_text);
