@@ -5,7 +5,6 @@
 #include "../../lib/decodehex.h"
 #include "../../lib/base64.h"
 
-// TODO: use base64
 // TODO: try to call chicken from c
 
 int
