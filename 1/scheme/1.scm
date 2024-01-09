@@ -12,7 +12,7 @@
 
 (define (decode-hex hex-string)
   (list->string
-    (map hex-to-char (string-split-fields ".." HEX))))
+    (map hex-to-char (string-split-fields ".." hex-string))))
 
 (let ((res (base64-encode (decode-hex HEX))))
   (print res))
