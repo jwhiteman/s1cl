@@ -1,0 +1,17 @@
+- to use LLDB (mac)
+  - compile with "cc -g -Wall -Wextra -Werror -pedantic std=c11 1.c, 2.c, ..., n.c -o whatever
+  - run with lldb ./whatever
+  - (lldb) breakpoint set --file my_program.c --line 10
+  - run
+  - p to print vars; use list to see source; help for help menu
+
+- let's say you have the following string:
+
+```
+char *str = "hello, world";
+```
+
+note that str is a pointer.
+however: str[3] - for example - is not a pointer, but a char.
+if you want to write to str[3] - again, for example, you'll need to use
+&str[3] to get the address.
