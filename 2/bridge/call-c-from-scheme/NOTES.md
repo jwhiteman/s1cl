@@ -1,3 +1,9 @@
+- to compile c & scm together
+	csc 2.c 2.scm -o output
+
+- to compile scm directly to c:
+	csc -t 2.scm
+
 reminder:
 
 you can start csi and then:

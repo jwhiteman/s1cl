@@ -8,7 +8,7 @@ x:
 	csc 2.c 2.scm -o output
 
 y:
-	csc -c 2.scm
+	csc -t 2.scm
 
 scm:
 	csc 2.c -cxx gcc 2.scm -o output
