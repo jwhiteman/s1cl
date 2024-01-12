@@ -4,5 +4,11 @@ build: 2.c 2.h
 clean:
 	rm -rf ex2 output
 
+x:
+	csc 2.c 2.scm -o output
+
+y:
+	csc -c 2.scm
+
 scm:
 	csc 2.c -cxx gcc 2.scm -o output
