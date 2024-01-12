@@ -1,14 +1,11 @@
-build: 2.c 2.h
-	cc -g -Wall -Wextra -Werror -pedantic -std=c11 2.c -o ex2
-
-clean:
-	rm -rf ex2 output
-
-x:
+build:
 	csc 2.c 2.scm -o output
 
-y:
-	csc -t 2.scm
+clean:
+	rm -rf ex2 output*
 
-scm:
+to_c:
+	csc -t 2.scm -o output.c
+
+old:
 	csc 2.c -cxx gcc 2.scm -o output
