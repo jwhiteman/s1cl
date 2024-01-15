@@ -1,3 +1,8 @@
+(define-syntax λ
+  (syntax-rules ()
+    ((_ (args ...) body ...)
+     (lambda (args ...) body ...))))
+
 (import
   (only regex string-split-fields)
   (only (chicken bitwise) bitwise-xor))
@@ -10,8 +15,8 @@
 (define (decrypt key hex-str)
   (list->string
     (map (compose integer->char
-                  (lambda (hex-int) (bitwise-xor hex-int key))
-                  (lambda (hex-byte) (string->number hex-byte 16)))
+                  (λ (hex-int) (bitwise-xor hex-int key))
+                  (λ (hex-byte) (string->number hex-byte 16)))
          (string-split-fields ".." hex-str))))
 
 (let ((max-score 0)
