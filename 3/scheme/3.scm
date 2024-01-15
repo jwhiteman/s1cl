@@ -7,7 +7,7 @@
 (define (score str)
   (length (string-split-fields "(?i)[etaoin shrdlu]" str)))
 
-(define (to-int hex-byte-str)
+(define (hex->integer hex-byte-str)
   (string->number hex-byte-str 16))
 
 (define key-builder
@@ -19,7 +19,7 @@
   (list->string
     (map (compose integer->char
                   key-f
-                  to-int)
+                  hex->integer)
          (string-split-fields ".." hex-str))))
 
 (let ((max-score 0)
