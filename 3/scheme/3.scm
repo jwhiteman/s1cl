@@ -7,27 +7,18 @@
 (define (score str)
   (length (string-split-fields "(?i)[etaoin shrdlu]" str)))
 
-(define (hex->integer hex-byte-str)
-  (string->number hex-byte-str 16))
-
-(define key-builder
-  (lambda (i)
-    (lambda (byte)
-      (bitwise-xor byte i))))
-
-(define (decrypt key-f hex-str)
+(define (decrypt key hex-str)
   (list->string
     (map (compose integer->char
-                  key-f
-                  hex->integer)
+                  (lambda (hex-int) (bitwise-xor hex-int key))
+                  (lambda (hex-byte) (string->number hex-byte 16)))
          (string-split-fields ".." hex-str))))
 
 (let ((max-score 0)
       (msg "failed."))
   (do ((i 0 (+ i 1)))
     ((> i 255) (print msg))
-    (let* ((key-f (key-builder i))
-           (res (decrypt key-f input))
+    (let* ((res (decrypt i input))
            (current-score (score res)))
       (when (> current-score max-score)
         (set! max-score current-score)
