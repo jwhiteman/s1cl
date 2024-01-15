@@ -17,7 +17,9 @@
 
 (define (decrypt key-f hex-str)
   (list->string
-    (map (compose integer->char key-f to-int)
+    (map (compose integer->char
+                  key-f
+                  to-int)
          (string-split-fields ".." hex-str))))
 
 (let ((max-score 0)
