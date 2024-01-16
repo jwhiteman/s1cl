@@ -20,18 +20,16 @@ score(char* decrypted_text)
   const char *error;
   int erroffset;
   pcre *re;
-  int ovector[30];
-  const char *pattern = "[etaoin shrdlu]";
-
-  re = pcre_compile(pattern, PCRE_CASELESS, &error, &erroffset, NULL);
+  re = pcre_compile("[etaoin shrdlu]", PCRE_CASELESS, &error, &erroffset, NULL);
   if (re == NULL) {
     printf("PCRE compilation failed at offset %d: %s\n", erroffset, error);
     return 1;
   }
 
-  int offset         = 0;
+  int ovector[30];
   int subject_length = strlen(decrypted_text);
   int match_count    = 0;
+  int offset         = 0;
 
   while (offset < subject_length && pcre_exec(re, NULL, decrypted_text, subject_length, offset, 0, ovector, 30) >= 0) {
     match_count++;
