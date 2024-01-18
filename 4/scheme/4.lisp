@@ -2,17 +2,23 @@
 
 (ql:quickload :cl-ppcre)
 
+(defun compose (&rest fns)
+  (destructuring-bind (fn1 . rest) (reverse fns)
+    #'(lambda (&rest args)
+        (reduce #'(lambda (v f) (funcall f v))
+                    rest
+                    :initial-value (apply fn1 args)))))
+
 (defun score (str)
   (length
     (cl-ppcre:all-matches-as-strings "(?i)[etaoin shrldu]" str)))
 
 (defun decrypt (hexstr key)
   (format nil "~{~A~}"
-          (mapcar #'(lambda (h)
-                      (code-char
-                        (logxor (parse-integer h :radix 16)
-                                key)))
-                  (cl-ppcre:all-matches-as-strings ".." hexstr))))
+          (mapcar (compose #'code-char
+                           #'(lambda (b) (logxor b key))
+                           #'(lambda (h) (parse-integer h :radix 16)))
+            (cl-ppcre:all-matches-as-strings ".." hexstr))))
 
 (let ((max 0)
       (msg))
