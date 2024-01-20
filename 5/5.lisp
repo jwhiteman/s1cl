@@ -1,28 +1,28 @@
-(defconstant verse (concatenate 'string "Burning 'em, if you ain't quick and "
+(defconstant input (concatenate 'string "Burning 'em, if you ain't quick and "
                                 "nimble\nI go crazy when I hear a cymbal"))
 
-(defconstant ice "ICE")
+(defconstant the-key "ICE")
 
 (defun to-bytes (str)
   (map 'list #'char-code str))
 
-(defun key-f (keyb)
-  (let ((keyb2 keyb))
+(defun repeating-key (master-key)
+  (let ((key-copy master-key))
     (lambda ()
       (prog1
-        (car keyb2)
-        (let ((next (cdr keyb2)))
-          (if (null next)
-            (setf keyb2 keyb)
-            (setf keyb2 next)))))))
+        (car key-copy)
+        (let ((key-copy-rest (cdr key-copy)))
+          (if (null key-copy-rest)
+            (setf key-copy master-key)
+            (setf key-copy key-copy-rest)))))))
 
-(defun repeat-key-xor (input key)
-  (let* ((ibytes (to-bytes input))
-         (kbytes (to-bytes key))
-         (key-fun (key-f kbytes)))
+(defun decrypt (text key)
+  (let* ((input-bytes (to-bytes text))
+         (key-bytes (to-bytes key))
+         (key-f (repeating-key key-bytes)))
     (format nil "~(~{~2,'0x~}~)"
-            (mapcar #'(lambda (ibyte)
-                        (logxor ibyte (funcall key-fun)))
-                    ibytes))))
+            (mapcar #'(lambda (input-byte)
+                        (logxor input-byte (funcall key-f)))
+                    input-bytes))))
 
-(format t "~a~%" (repeat-key-xor verse ice))
+(format t "~a~%" (decrypt input the-key))
