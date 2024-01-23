@@ -32,30 +32,35 @@
      (length bytes1)))
 
 (defun in-slices (lst-f lst k)
-  (labels ((F (lst idx slice-1 slice-2)
+  (labels ((F (lst idx slice-1 slice-2 acc)
               (cond ((null lst)
-                     (when (= (length slice-2) k)
-                       (funcall lst-f slice-1 (reverse slice-2))))
+                     (if (= (length slice-2) k)
+                       (funcall lst-f slice-1 (reverse slice-2) acc)
+                       acc))
                     ((= idx k)
                      (let ((cur (reverse slice-2)))
-                       (when slice-1
-                         (funcall lst-f slice-1 cur))
-                       (F lst 0 cur '())))
+                       (F lst                                 ;; list
+                          0                                   ;; idx
+                          cur                                 ;; slice-1
+                          '()                                 ;; slice-2
+                          (funcall lst-f slice-1 cur acc))))  ;; acc
                     (t
-                      (F (cdr lst)
-                         (1+ idx)
-                         slice-1
-                         (cons (car lst) slice-2))))))
-    (F lst 0 '() '())))
+                      (F (cdr lst)                            ;; list
+                         (1+ idx)                             ;; idx
+                         slice-1                              ;; slice-1
+                         (cons (car lst) slice-2)             ;; slice-2
+                         acc)))))                             ;; acc
+    (F lst 0 '() '() '())))
 
 (defun average-hamming-distance (input k)
-  (let ((acc))
-    (in-slices #'(lambda (bytes1 bytes2)
-                   (let ((nhd (normalized-hamming-distance bytes1 bytes2)))
-                     (setf acc (cons nhd acc))))
-               input
-               k)
-    (/ (reduce #'+ acc) (length acc))))
+  (let ((res (in-slices #'(lambda (bytes1 bytes2 acc)
+                            (if (and bytes1 bytes2)
+                              (let ((nhd (normalized-hamming-distance bytes1 bytes2)))
+                                (cons nhd acc))
+                              acc))
+                        input
+                        k)))
+             (/ (reduce #'+ res) (length res))))
 
 (defun most-likely-keysize (input)
   (let ((acc))
@@ -64,3 +69,12 @@
       (let* ((ahd (average-hamming-distance input keysize))
              (entry (cons keysize ahd)))
         (setf acc (cons entry acc))))))
+
+(defun most-likely-keysize (input from to)
+  (labels ((F (from acc)
+              (if (> from to)
+                acc
+                (let ((ahd (average-hamming-distance input from)))
+                  (F (1+ from)
+                     (cons (cons from ahd) acc))))))
+    (caar (sort (F from '()) #'< :key #'cdr))))
