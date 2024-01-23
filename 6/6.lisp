@@ -54,8 +54,9 @@
 
 (defun accumulate-hamming-distances (bytes1 bytes2 acc)
   (if (and bytes1 bytes2)
-    (cons (normalized-hamming-distance bytes1 bytes2) acc)
-    acc))
+    (let ((res (normalized-hamming-distance bytes1 bytes2)))
+      (cons res acc))
+    acc)) ;; returning acc unchanged in this case because in-slices uses the accumulator pattern
 
 (defun average-hamming-distance (input keysize)
   (let ((hamming-distances (in-slices #'accumulate-hamming-distances
@@ -73,4 +74,4 @@
                      (cons (cons from-keysize ahd) acc))))))
     (caar (sort (_ from-keysize '()) #'< :key #'cdr))))
 
-;; (most-likely-keysize input-bytes :from-keysize 2 :to-keysize 40)
+;; (most-likely-keysize input-bytes :from-keysize 29 :to-keysize 29)
