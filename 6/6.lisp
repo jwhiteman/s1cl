@@ -37,7 +37,7 @@
                 (reverse acc)
                 (H (1+ idx)
                    (cons (subseq input (* block-length idx)
-                                 (* block-length (1+ idx)))
+                                       (* block-length (1+ idx)))
                          acc)))))
     (H 0 '())))
 
